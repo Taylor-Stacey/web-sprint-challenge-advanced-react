@@ -69,17 +69,6 @@ export default class AppClass extends React.Component {
     this.setState({ ...initialState })
   }
 
-  getNextIndex = (direction) => {
-    // This helper takes a direction ("left", "up", etc) and calculates what the next index
-    // of the "B" would be. If the move is impossible because we are at the edge of the grid,
-    // this helper should return the current index unchanged.
-  }
-
-  move = (evt) => {
-    // This event handler can use the helper above to obtain a new index for the "B",
-    // and change any states accordingly.
-  }
-
   onChange = (evt) => {
     // You will need this to update the value of the input.
     this.setState({
