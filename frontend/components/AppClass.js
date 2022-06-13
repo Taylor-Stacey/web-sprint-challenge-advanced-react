@@ -24,48 +24,49 @@ export default class AppClass extends React.Component {
     ...initialState
   }
 
-  // getXY = (num) => {
-  //   // It it not necessary to have a state to track the coordinates.
-  //   // It's enough to know what index the "B" is at, to be able to calculate them.
+  changeCoordinates = (xVal, yVal) => {
+    if (this.state.x + xVal > 3) {
+      this.setState({
+        ...this.state,
+        message: "You can't go right"
+      })
+    }
 
-  //   if(this.state.index = 0) {
-  //     return" Coordinates (1,1)"
-  //   }
-  //   if(this.state.index = 1) {
-  //     return (1,2)
-  //   }
-  //   if(this.state.index = 2) {
-  //     return (1,3)
-  //   }
-  //   if(this.state.index = 3) {
-  //     return (2,1)
-  //   }
-  //   if(this.state.index === 4) {
-  //     return (2,2)
-  //   }
-  //   if(this.state.index = 5) {
-  //     return (2,3)
-  //   }
-  //   if(this.state.index = 6) {
-  //     return (3,1)
-  //   }
-  //   if(this.state.index = 7) {
-  //     return (3,2)
-  //   }
-  //   if(this.state.index = 8) {
-  //     return (3,3)
-  //   }
-  // }
+    else if (this.state.x + xVal < 1) {
+      this.setState({
+        ...this.state,
+        message: "You can't go left"
+      })
+    }
 
-  // getXYMessage = () => {
-  //   // It it not necessary to have a state to track the "Coordinates (2, 2)" message for the user.
-  //   // You can use the `getXY` helper above to obtain the coordinates, and then `getXYMessage`
-  //   // returns the fully constructed string.
-  // }
+    else if (this.state.y + yVal > 3) {
+      this.setState({
+        ...this.state,
+        message: "You can't go down"
+      })
+    }
+
+    else if (this.state.y + yVal < 1) {
+      this.setState({
+        ...this.state,
+        message: "You can't go up"
+      })
+    }
+
+    else {
+      this.setState({
+        ...this.state,
+        x: this.state.x + xVal,
+        y: this.state.y + yVal,
+        steps: this.state.steps + 1,
+        message: ""
+      })
+    }
+  }
 
   reset = () => {
     // Use this helper to reset all states to their initial values.
-    this.setState(...initialState)
+    this.setState({ ...initialState })
   }
 
   getNextIndex = (direction) => {
@@ -116,26 +117,29 @@ export default class AppClass extends React.Component {
     return (
       <div id="wrapper" className={className}>
         <div className="info">
-          <h3 id="coordinates">Coordinates {this.getXY(this.state.index)}</h3>
-          <h3 id="steps">{`You moved ${this.state.steps} times`}</h3>
+          <h3 id="coordinates">{`Coordinates (${this.state.x}, ${this.state.y})`}</h3>
+          {this.state.steps === 1 ? <h3 id="steps">You moved 1 time</h3> : <h3 id="steps">You moved {this.state.steps} times</h3>}
         </div>
         <div id="grid">
-          {
-            [0, 1, 2, 3, 4, 5, 6, 7, 8].map(idx => (
-              <div key={idx} className={`square${idx === 4 ? ' active' : ''}`}>
-                {idx === 4 ? 'B' : null}
-              </div>
-            ))
-          }
+          <div className={`square ${this.state.x === 1 && this.state.y === 1 ? 'active' : ''}`}>{this.state.x === 1 && this.state.y === 1 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 2 && this.state.y === 1 ? 'active' : ''}`}>{this.state.x === 2 && this.state.y === 1 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 3 && this.state.y === 1 ? 'active' : ''}`}>{this.state.x === 3 && this.state.y === 1 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 1 && this.state.y === 2 ? 'active' : ''}`}>{this.state.x === 1 && this.state.y === 2 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 2 && this.state.y === 2 ? 'active' : ''}`}>{this.state.x === 2 && this.state.y === 2 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 3 && this.state.y === 2 ? 'active' : ''}`}>{this.state.x === 3 && this.state.y === 2 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 1 && this.state.y === 3 ? 'active' : ''}`}>{this.state.x === 1 && this.state.y === 3 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 2 && this.state.y === 3 ? 'active' : ''}`}>{this.state.x === 2 && this.state.y === 3 ? "B" : ""}</div>
+          <div className={`square ${this.state.x === 3 && this.state.y === 3 ? 'active' : ''}`}>{this.state.x === 3 && this.state.y === 3 ? "B" : ""}</div>
+
         </div>
         <div className="info">
           <h3 id="message">{this.state.message}</h3>
         </div>
         <div id="keypad">
-          <button id="left">LEFT</button>
-          <button id="up">UP</button>
-          <button id="right">RIGHT</button>
-          <button id="down">DOWN</button>
+          <button id="left" onClick={() => this.changeCoordinates(-1, 0)}>LEFT</button>
+          <button id="up" onClick={() => this.changeCoordinates(0, -1)}>UP</button>
+          <button id="right" onClick={() => this.changeCoordinates(1, 0)}>RIGHT</button>
+          <button id="down" onClick={() => this.changeCoordinates(0, 1)}>DOWN</button>
           <button id="reset" onClick={() => this.reset()}>reset</button>
         </div>
         <form>
