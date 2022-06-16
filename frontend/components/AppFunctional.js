@@ -172,16 +172,17 @@ export default function AppFunctional(props) {
         <h3 id="message">{state.message}</h3>
       </div>
       <div id="keypad">
-        <button id="left" onClick={() => changeCoordinates(-1,0)}>LEFT</button>
-        <button id="up" onClick={() => changeCoordinates(0,-1)}>UP</button>
-        <button id="right" onClick={()=> changeCoordinates(1,0)}>RIGHT</button>
-        <button id="down" onClick={()=> changeCoordinates(0,1)}>DOWN</button>
-        <button id="reset" onClick={()=> reset()}>reset</button>
+        <button id="left" onClick={() => changeCoordinates(-1, 0)}>LEFT</button>
+        <button id="up" onClick={() => changeCoordinates(0, -1)}>UP</button>
+        <button id="right" onClick={() => changeCoordinates(1, 0)}>RIGHT</button>
+        <button id="down" onClick={() => changeCoordinates(0, 1)}>DOWN</button>
+        <button id="reset" onClick={() => reset()}>reset</button>
       </div>
       <form>
+
         <input id="email" type="email" placeholder="type email" value={state.email} onChange={(evt) => onChange(evt)}></input>
-        <input id="submit" type="submit" onClick={(evt) => onSubmit(evt)}></input>
-      </form>
-    </div>
+        <input data-testid="submit" id="submit" type="submit" onClick={(evt) => onSubmit(evt)}></input>
+    </form>
+    </div >
   )
 }
