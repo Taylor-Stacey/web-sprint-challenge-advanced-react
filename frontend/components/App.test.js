@@ -32,27 +32,19 @@ test('renders an error message when out of bounds', async () => {
   expect(errorMessage)
 })
 
-test("invalid email throws error message", async () => {
-  render(<AppFunctional />);
+test('renders an error message when out of bounds', async () => {
+  render(<AppFunctional />)
 
-  const emailInput = screen.getByPlaceholderText("type email");
-  userEvent.type(emailInput, "thisIsNotAnEmail");
+  const moveUp = screen.getByText('UP');
+  userEvent.click(moveUp)
+  userEvent.click(moveUp)
 
-  const submitButton = screen.getByTestId("submit");
-  userEvent.click(submitButton);
-
-  const errorMessage = await screen.findByText(/Ouch: email must be a valid email/i);
-  expect(errorMessage).toBeVisible();
-
+  const errorMessage = await screen.findByText(/You can't go up/i);
+  expect(errorMessage)
 })
 
-test("cant submit without email", async () => {
-  render(<AppFunctional />);
-
-  const submitButton = screen.getByTestId("submit");
-  userEvent.click(submitButton);
-
-  const errorMessage = await screen.findByText(/Ouch: email is required/i);
-  expect(errorMessage).toBeVisible();
-
+test('block has letter B', () => {
+  render(<AppFunctional />)
+  const block = screen.getByText(/B/i)
+  expect(block).toBeInTheDocument()
 })
