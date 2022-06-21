@@ -45,3 +45,14 @@ test("invalid email throws error message", async () => {
   expect(errorMessage).toBeVisible();
 
 })
+
+test("cant submit without email", async () => {
+  render(<AppFunctional />);
+
+  const submitButton = screen.getByTestId("submit");
+  userEvent.click(submitButton);
+
+  const errorMessage = await screen.findByText(/Ouch: email is required/i);
+  expect(errorMessage).toBeVisible();
+
+})
